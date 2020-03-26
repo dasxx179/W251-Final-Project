@@ -69,13 +69,21 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 ## Cloud Deployment
 
-> Hersh plz help.  
+> In order to deal with the large amount of data, we decided to deploy our model in the cloud in order to take avantage of higher powered v100 GPUs. We used the GPUs in the IBM Cloud, and ran Pytorch with CUDA.  We ran our model itsself inside the Docker container (w251 docker bases).
 
 ### Cloud Architecture
 
-> Hersh plz help.
+> We used a singular GPU. It took us XX hours to finish the model training, and XX hours for inference. 
 
 ## Results
+
+We will compare our results to those from the Kaggle competition, which uses a Continuous Ranked Probability Score. There, competitors must predict a cimulative probability of yards achieved, strarting from -99 to +99 yards. 
+
+However, we choose not to restrict ourselves. The first approach is to take the yards gained by the rusher, and use that as a numeric value that we want to predict. In this case, the data is available in the dataset given by Kaggle.
+
+The second option is to compute a Continuous Ranked Probability Score. It is essentially the MSE of the cumulative density function. We can use the Properscoring library in order to caculate CRPS. For an arbitrary cumulative distribution function, we can use the crps_quadrature command. This package implements CRPS - https://github.com/raybellwaves/xskillscore.
+
+Can also use (https://github.com/aguschin/kaggle/blob/master/rain_crps.py). However, we need the actual cumulative distribution function, which I don' think we have. 
 
 ## Visualization
 
