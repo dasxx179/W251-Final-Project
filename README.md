@@ -9,10 +9,14 @@
 - [Features](#Features)
   - [Datasets](#Datasets)
   - [EDA](#EDA)
+    - [Feature Engineering](#Feature Engineering)
   - [Data Modification](#Data-Modification)
-- [Model](#Model)
-  - [Model Architecture](#Model-Architecture)
-  - [Model Development](#Model-Development)
+- [Baseline Model](#Baseline Model)
+- CNN Model
+  - [CNN Model Architecture](#CNN Model-Architecture)
+  - [CNN Model Development](#CNN Model-Development)
+- [Experimentation](#Experimentation)
+  - [Hyperparameters](#Hyperparameters)
 - [Cloud Deployment](#Cloud-Deployment)
   - [Cloud Architecture](#Cloud-Architecture)
 - [Results](#Results)
@@ -51,25 +55,166 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Df Image](/src/images/originalDfhead.png "Df Head")
 
-
+> The original dataset shown above is modified in two different ways to establish two models.  In the EDA section below, the dataset is modified using feature engineering and other methods to establish a baseline model based off different kaggle references.  This model is used as a reference for comparison to our group's own model, which is described in the Model section.  The alteration of the original dataset for our model is described in the below Data Modification section.  
 
 ### EDA
 
-> Sayan TODO
+> In order to establish the baseline model, it is necessary to clean up the original dataset and add new features along the way.  
+>
+> At first, some features of the data are visualized such as the yards gained and lost for a random game.  The yard feature in particular is examined because ultimately, this feature is what will be predicted from our models.  The graph is shown below:
+>
+> ![Yard Image](/src/images/yardImage.png "Yards")
+>
+> Based on the plot above, there are many run plays that are occurring in this game, which implies that the teams most likely had two powerful runningbacks.  The majority of the plays resulted in yardage gain, and one of the runs resulted in a large gain of over 25 yards.  This is an example of a good play to analyze to determine the various defensive formations that are used against running plays. 
+
+> Another powerful visualization that was conducted during the EDA was examining the number of yards gained based on defensive schema.  The average yards gained based on each defensive schema is shown below:
+>
+> ![Defensive Schema](/src/images/defensiveSchema.png)
+>
+> By analyzing the different defensive schemas that are used by the teams, it is easy to see that the most common schema used is a 4-2-5, which is typically used against passing plays.  This is most likely attributed to the fact that the majority of the plays in the NFL are passing plays and not rushing plays.  However, a 4-2-5 is also effective at covering a run play, for the median yardage gain is 4 yards.  Additionally, it is shown that 75% of the plays with this schema are held to 6 yards or less.  This type of analysis helps determine which specific defensive schemas are more effective than others in the NFL.
+>
+> #### Feature Engineering
+>
+> First, it is important to gain an understanding of what categorial features are included in the dataset.  The following features are included:
+>
+> ![Categorical Features](/src/images/categoricalFeatures.png)
+>
+> Let's take a closer look at some of these categorical features.
+>
+> ##### Stadium Type
+>
+> The following image shows the counts of the different stadium types:
+>
+> ![Stadium Type](/src/images/stadiumType.png)
+>
+> As apparent from above, there are numerous variations and even misspellings of Indoor and Outdoor stadiums.  Let's clean it up and fix some of these typos.  
+>
+> ```python
+> def clean_StadiumType(txt):
+>     if pd.isna(txt):
+>         return np.nan
+>     txt = txt.lower()
+>     txt = ''.join([c for c in txt if c not in punctuation])
+>     txt = re.sub(' +', ' ', txt)
+>     txt = txt.strip()
+>     txt = txt.replace('outside', 'outdoor')
+>     txt = txt.replace('outdor', 'outdoor')
+>     txt = txt.replace('outddors', 'outdoor')
+>     txt = txt.replace('outdoors', 'outdoor')
+>     txt = txt.replace('oudoor', 'outdoor')
+>     txt = txt.replace('indoors', 'indoor')
+>     txt = txt.replace('ourdoor', 'outdoor')
+>     txt = txt.replace('retractable', 'rtr.')
+>     return txt
+> train['StadiumType'] = train['StadiumType'].apply(clean_StadiumType)
+> ```
+>
+> Also, let's convert all outdoor or open stadium types to 1 and indoor or closed stadium types to 0:
+>
+> ```python
+> def transform_StadiumType(txt):
+>     if pd.isna(txt):
+>         return np.nan
+>     if 'outdoor' in txt or 'open' in txt:
+>         return 1
+>     if 'indoor' in txt or 'closed' in txt:
+>         return 0
+>     
+>     return np.nan
+> train['StadiumType'] = train['StadiumType'].apply(transform_StadiumType)
+> ```
+>
+> Now, our counts for the stadium type feature look like:
+>
+> ![Stadium Counts](/src/images/stadiumCounts.png)
+>
+> This categorical feature is now ready for input to our baseline model.
+>
+> Similarly, we process the other categorical features that were shown above.  In addition, we create  other features useful for our baseline model such as the numbers of Defenders in the Box vs Distance.  These features that are not categorical are shown below:
+>
+> ![Train Features](/src/images/trainFeatures.png)
+>
+> Ultimately, these are the features that will be used to create our baseline model described in the Baseline Model section below.  
 
 ### Data Modification
 
 > Jake plz talk about what ya did.  
 
-## Model
+## Baseline Model
 
-### Model Architecture
+> The model that will be used is a simple random forest model.  Having dropped all the categorical features in our cleaned dataset, now we can make a row for each play where the rusher is the last one.  
+>
+> First, let's fill our missing values:
+>
+> ```python
+> train.fillna(-999, inplace=True)
+> ```
+>
+> Next, let's create a variable for all of the players (22 players total since 11 on each team):
+>
+> ```python
+> players_col = []
+> for col in train.columns:
+>     if train[col][:22].std()!=0:
+>         players_col.append(col)
+> ```
+>
+> Let's create our train set:
+>
+> ```python
+> X_train = np.array(train[players_col]).reshape(-1, len(players_col)*22)
+> ```
+>
+> Now, we can combine the rows for each play into one row where the rusher is the last player:
+>
+> ```python
+> play_col = train.drop(players_col+['Yards'], axis=1).columns
+> X_play_col = np.zeros(shape=(X_train.shape[0], len(play_col)))
+> for i, col in enumerate(play_col):
+>     X_play_col[:, i] = train[col][::22]
+> ```
+>
+> ```python
+> X_train = np.concatenate([X_train, X_play_col], axis=1)
+> y_train = np.zeros(shape=(X_train.shape[0], 199))
+> for i,yard in enumerate(train['Yards'][::22]):
+>     y_train[i, yard+99:] = np.ones(shape=(1, 100-yard))
+> ```
+>
+> Apply our scaler and set our batch size:
+>
+> ```python
+> scaler = StandardScaler()
+> X_train = scaler.fit_transform(X_train)
+> batch_size=64
+> ```
+>
+> Finally, let's split our training set into 85/15, so we can have a test set as well:
+>
+> ```python
+> from sklearn.model_selection import train_test_split
+> X_trainNew, X_test, y_trainNew, y_test = train_test_split(X_train, y_train, test_size = 0.15, random_state = 42)
+> ```
+>
+> After training our baseline model, we get a validation result from splitting our already split train set into a new train set and validation set.  The result is shown below:
+>
+> ![Validation](/src/images/validation.png)
+
+	Let's test our trained model on our test set that we created from splitting our cleaned dataset.  
+
+## CNN Model
+
+### CNN Model Architecture
 
 > Peter plz help.
 
-### Model Development
+### CNN Model Development
 
 > Peter plz help.
+
+## Experimentation
+
+### Hyperparameters
 
 ## Cloud Deployment
 
