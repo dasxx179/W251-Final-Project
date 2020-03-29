@@ -49,7 +49,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 > The dataset used for this project contains Next Gen Stats tracking data for various running plays.  The head of the original dataset is shown below:
 >
-> ![alt text](https://github.com/dasxx179/W251-Final-Project/tree/sayan-work/src/images/originalDfhead.png "Df Head")
+> ![Df Image](/src/images/originalDfhead.png "Df Head")
 
 
 
