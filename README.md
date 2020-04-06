@@ -226,9 +226,9 @@ The original data has different dynamic range and prevent the network from conve
 
 ### Toy model experiment
 
-After model standarization and model selection, we have tested small 10x play data sets in Google Colab and confirmed model converges as shown below. This small dataset was split into 6 training and 4 test sets for experiment. 
+After model standarization and model selection, we have tested small 10x play data sets in Google Colab and confirmed model converges as shown below. This small dataset was split into 6 training and 4 test sets for experiment.
 
-<img src="/src/images/toy_model_converge.png" width="400">
+<img src="/src/images/toy_model_converge.png" width="800">
 
 ## Experimentation
 
