@@ -212,7 +212,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 ### CNN Model Development
 
-> ![Kernel size](/src/images/convnet_kernel_size.png)
+> ![Kernel size](/src/images/convnet_kernel_size.png| width=48)
 
 ## Experimentation
 
