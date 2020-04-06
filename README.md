@@ -215,15 +215,15 @@ Once we successfully convert original dataframe to tensor format, we can define 
 
 > ![CNN architecture](/src/images/CNN_architecture.png)
 
+
+<img src="/src/images/convnet_kernel_size.png" width="400">
+
+
+
 The original data has different dynamic range and prevent the network from converging. Thus it is important to standarize the data. The following figure shows the data distribution before and after data standarization.
 
 > ![CNN architecture](/src/images/data_normalization.png)
 
-
-
-### CNN Model Development
-
-<img src="/src/images/convnet_kernel_size.png" width="400">
 
 ## Experimentation
 
