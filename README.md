@@ -36,7 +36,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 ## Installation
 
-- Clone this repository to local machine using: 
+- Clone this repository to local machine using:
 
   ```git
   git clone https://github.com/dasxx179/W251-Final-Project.git
@@ -65,7 +65,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Yard Image](/src/images/yardImage.png "Yards")
 >
-> Based on the plot above, there are many run plays that are occurring in this game, which implies that the teams most likely had two powerful runningbacks.  The majority of the plays resulted in yardage gain, and one of the runs resulted in a large gain of over 25 yards.  This is an example of a good play to analyze to determine the various defensive formations that are used against running plays. 
+> Based on the plot above, there are many run plays that are occurring in this game, which implies that the teams most likely had two powerful runningbacks.  The majority of the plays resulted in yardage gain, and one of the runs resulted in a large gain of over 25 yards.  This is an example of a good play to analyze to determine the various defensive formations that are used against running plays.
 
 > Another powerful visualization that was conducted during the EDA was examining the number of yards gained based on defensive schema.  The average yards gained based on each defensive schema is shown below:
 >
@@ -206,11 +206,13 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 ### CNN Model Architecture
 
-> Peter plz help.
+> ![tensor definition](/src/images/tensor_definition.png)
+> ![CNN architecture](/src/images/data_normalization.png)
+> ![CNN architecture](/src/images/CNN_architecture.png)
 
 ### CNN Model Development
 
-> Peter plz help.
+> ![Kernel size](/src/images/convnet_kernel_size.png)
 
 ## Experimentation
 
