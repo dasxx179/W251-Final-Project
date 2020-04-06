@@ -209,11 +209,11 @@ Ultimately, this project explores game, play, and player-level data provided by 
 > ![tensor definition](/src/images/tensor_definition.png)
 > ![CNN architecture](/src/images/data_normalization.png)
 > ![CNN architecture](/src/images/CNN_architecture.png)
-<img src="/src/images/convnet_kernel_size.png" width="48">
+
 
 ### CNN Model Development
 
-> ![Kernel size](/src/images/convnet_kernel_size.png)
+<img src="/src/images/convnet_kernel_size.png" width="400">
 
 ## Experimentation
 
