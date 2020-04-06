@@ -203,12 +203,22 @@ Ultimately, this project explores game, play, and player-level data provided by 
 	Let's test our trained model on our test set that we created from splitting our cleaned dataset.  
 
 ## CNN Model
+The existing data structure is not suitable for the CNN model, which is widely used in many of the computer vision area. In order to use CNN, we constructed following data structure. The main idea is to construct pixel-like tensor data structure using the player's x and y coordinate in the training data set. On each player's position, we appended player-specific information such as player's speed, acceleration, angle and etc.
+
+> ![tensor definition](/src/images/tensor_definition.png)
+
 
 ### CNN Model Architecture
 
-> ![tensor definition](/src/images/tensor_definition.png)
-> ![CNN architecture](/src/images/data_normalization.png)
+Once we successfully convert original dataframe to tensor format, we can define CNN model. The baseline CNN model is simple 4 layer model. The first 3 layers are Convolutional network and last layer is fully-connected network. There are two significant difference between our model and the commonly used CNN model such as AlexNet or VGGNet. First the last layer use linear activation function instead of softmax. This is because our model is for regression rather than classification. Secondly, the kernel size we used is somewhat large compared to the conventional model The rationale behind this is that unlike image data with rich information in all the pixels, the density of meaningful data in our tensor structure is very low. Thus to capture certain player formation leading to yardage, kernel size should be large enough to cover multiple play'er data. Based on the histogram analysis, the player's distribution in Y is somewhere between 1 and 59. So we chose 64 as the kernel size. The further optimization can be made.
+
+
 > ![CNN architecture](/src/images/CNN_architecture.png)
+
+The original data has different dynamic range and prevent the network from converging. Thus it is important to standarize the data. The following figure shows the data distribution before and after data standarization.
+
+> ![CNN architecture](/src/images/data_normalization.png)
+
 
 
 ### CNN Model Development
