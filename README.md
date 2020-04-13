@@ -75,6 +75,8 @@ In order to deal with the large amount of data, we decided to deploy our model i
 
 > We used a singular GPU. It took us XX hours to finish the model training, and XX hours for inference. 
 
+![Cloud Architecture](/Cloud.png)
+
 ## Results
 
 We will compare our results to those from the Kaggle competition, which uses a Continuous Ranked Probability Score. There, competitors must predict a cimulative probability of yards achieved, strarting from -99 to +99 yards. 
