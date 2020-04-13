@@ -9,12 +9,11 @@
 - [Features](#Features)
   - [Datasets](#Datasets)
   - [EDA](#EDA)
-    - [Feature Engineering](#Feature Engineering)
+    - [Feature Engineering](#Feature-Engineering)
   - [Data Modification](#Data-Modification)
-- [Baseline Model](#Baseline Model)
 - CNN Model
-  - [CNN Model Architecture](#CNN Model-Architecture)
-  - [CNN Model Development](#CNN Model-Development)
+  - [CNN Model Architecture](#CNN-Model-Architecture)
+  - [CNN Model Development](#CNN-Model-Development)
 - [Experimentation](#Experimentation)
   - [Hyperparameters](#Hyperparameters)
 - [Cloud Deployment](#Cloud-Deployment)
@@ -134,73 +133,11 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Train Features](/src/images/trainFeatures.png)
 >
-> Ultimately, these are the features that will be used to create our baseline model described in the Baseline Model section below.  
+> Ultimately, these are the features that provide an exploration of the dataset and gave us an understanding of what features to keep in mind for our model development.  
 
 ### Data Modification
 
 > Jake plz talk about what ya did.  
-
-## Baseline Model
-
-> The model that will be used is a simple random forest model.  Having dropped all the categorical features in our cleaned dataset, now we can make a row for each play where the rusher is the last one.  
->
-> First, let's fill our missing values:
->
-> ```python
-> train.fillna(-999, inplace=True)
-> ```
->
-> Next, let's create a variable for all of the players (22 players total since 11 on each team):
->
-> ```python
-> players_col = []
-> for col in train.columns:
->     if train[col][:22].std()!=0:
->         players_col.append(col)
-> ```
->
-> Let's create our train set:
->
-> ```python
-> X_train = np.array(train[players_col]).reshape(-1, len(players_col)*22)
-> ```
->
-> Now, we can combine the rows for each play into one row where the rusher is the last player:
->
-> ```python
-> play_col = train.drop(players_col+['Yards'], axis=1).columns
-> X_play_col = np.zeros(shape=(X_train.shape[0], len(play_col)))
-> for i, col in enumerate(play_col):
->     X_play_col[:, i] = train[col][::22]
-> ```
->
-> ```python
-> X_train = np.concatenate([X_train, X_play_col], axis=1)
-> y_train = np.zeros(shape=(X_train.shape[0], 199))
-> for i,yard in enumerate(train['Yards'][::22]):
->     y_train[i, yard+99:] = np.ones(shape=(1, 100-yard))
-> ```
->
-> Apply our scaler and set our batch size:
->
-> ```python
-> scaler = StandardScaler()
-> X_train = scaler.fit_transform(X_train)
-> batch_size=64
-> ```
->
-> Finally, let's split our training set into 85/15, so we can have a test set as well:
->
-> ```python
-> from sklearn.model_selection import train_test_split
-> X_trainNew, X_test, y_trainNew, y_test = train_test_split(X_train, y_train, test_size = 0.15, random_state = 42)
-> ```
->
-> After training our baseline model, we get a validation result from splitting our already split train set into a new train set and validation set.  The result is shown below:
->
-> ![Validation](/src/images/validation.png)
-
-	Let's test our trained model on our test set that we created from splitting our cleaned dataset.  
 
 ## CNN Model
 The existing data structure is not suitable for the CNN model, which is widely used in many of the computer vision area. In order to use CNN, we constructed following data structure. The main idea is to construct pixel-like tensor data structure using the player's x and y coordinate in the training data set. On each player's position, we appended player-specific information such as player's speed, acceleration, angle and etc.
