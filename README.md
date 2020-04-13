@@ -181,15 +181,21 @@ After model standarization and model selection, we have tested small 10x play da
 
 ## Cloud Deployment
 
-> Hersh plz help.  
+In order to deal with the large amount of data, we decided to deploy our model in the cloud in order to take avantage of higher powered v100 GPUs. We used the GPUs in the IBM Cloud, and ran Keras/Tensorflow with CUDA.  We ran our model inside the Docker container (w251 hw6 base docker), inside of a Jupyter notebook.
 
-### Cloud Architecture
+We used a singular GPU. It took us 2.5 hours to finish the model training, with inference time being trivial. Our architecture is as follows: 
 
-> Hersh plz help.
+![Cloud Architecture](/Cloud.png)
 
 ## Results
 
-## Visualization
+The Kaggle competitionuses a Continuous Ranked Probability Score. There, competitors must predict a cimulative probability of yards achieved, strarting from -99 to +99 yards. 
+
+However, we choose not to restrict ourselves. We choose to take the yards gained by the rusher, and use that as a numeric value that we want to predict. In this case, the data is available in the dataset given by Kaggle.
+
+We then use MSE as our loss function to evaluate our results. Ultimately, our RMSE which is a proxy for standard deviation was 3.5 yards when our mean was about 70. That comes out to about a 5% SD on our predicted values.
+
+We saw little to no overfitting, as we can see in our graph of predicted vs true data. 
 
 ## White Paper
 
