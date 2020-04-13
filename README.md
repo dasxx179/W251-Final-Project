@@ -185,7 +185,7 @@ In order to deal with the large amount of data, we decided to deploy our model i
 
 We used a singular GPU. It took us 2.5 hours to finish the model training, with inference time being trivial. Our architecture is as follows: 
 
-![Cloud Architecture](/Cloud.png)
+![Cloud Architecture](/src/images/Cloud.png)
 
 ## Results
 
