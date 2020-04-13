@@ -69,7 +69,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 
 ## Cloud Deployment
 
-> In order to deal with the large amount of data, we decided to deploy our model in the cloud in order to take avantage of higher powered v100 GPUs. We used the GPUs in the IBM Cloud, and ran Pytorch with CUDA.  We ran our model itsself inside the Docker container (w251 docker bases).
+In order to deal with the large amount of data, we decided to deploy our model in the cloud in order to take avantage of higher powered v100 GPUs. We used the GPUs in the IBM Cloud, and ran Pytorch with CUDA.  We ran our model itsself inside the Docker container (w251 docker bases).
 
 ### Cloud Architecture
 
