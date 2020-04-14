@@ -195,7 +195,10 @@ However, we choose not to restrict ourselves. We choose to take the yards gained
 
 We then use MSE as our loss function to evaluate our results. Ultimately, our RMSE which is a proxy for standard deviation was 3.5 yards when our mean was about 70. That comes out to about a 5% SD on our predicted values.
 
-We saw little to no overfitting, as we can see in our graph of predicted vs true data. 
+We saw little to no overfitting, as we can see in our graph of predicted vs true data. The general pattern is captured, which the heavy deviations are not predicted. For train v val loss, it is a fantastic sign that both are decreasing steadily.
+
+![Cloud Architecture](/src/images/results.png)
+
 
 ## White Paper
 
