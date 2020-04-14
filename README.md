@@ -5,13 +5,12 @@
 ## Table of Contents
 
 - [Purpose](#Purpose)
-- [Installation](#Installation)
 - [Features](#Features)
   - [Datasets](#Datasets)
   - [EDA](#EDA)
     - [Feature Engineering](#Feature-Engineering)
   - [Data Modification](#Data-Modification)
-- CNN Model
+- [CNN Model](#CNN-Model)
   - [CNN Model Architecture](#CNN-Model-Architecture)
   - [CNN Model Development](#CNN-Model-Development)
 - [Experimentation](#Experimentation)
@@ -29,22 +28,9 @@
 
 Sports can be quite complex.  While many sports have an extremely simple goal, the actual mechanics and characteristics of sports can be incredibly arduous to comprehend.  In particular, American football is a sport comprised of a myriad of different plays and actions that can impact the objective of gaining yardage to accomplish the ultimate goal of scoring (ideally a touchdown).  Of course, the offense wants to score by run (rush) or throw (pass) plays with a ball to gain yards, moving towards the opposing teams' side of the field to score.  The defense wants to prevent the offensive teams' objective of scoring.
 
-In the National Football League (NFL), about a third of teams' offensive yardage comes from run plays.  These run plays are thought to be attributed primarily to the talent of the ball carrier; however, the ball carrier's teammates, coach, and opposing defense have an enormous impact in the success of the ball carrier.  
+In the National Football League (NFL), about a third of teams' offensive yardage comes from run plays.  These run plays are thought to be attributed primarily to the talent of the ball carrier; however, the ball carrier's teammates, coach, and opposing defense have an enormous impact in the success of the ball carrier.
 
-Ultimately, this project explores game, play, and player-level data provided by NFL's Next Gen Stats.  Various neural network architectures and model types are experimented with and explored, and ultimately, deeper insights can help any lover of football to understand the various skills and strategies of players and coaches.   
-
-## Installation
-
-- Clone this repository to local machine using:
-
-  ```git
-  git clone https://github.com/dasxx179/W251-Final-Project.git
-  ```
-
-- Use the **parsedData.csv** file (modified from the original **train.csv** file) to run the below scripts:
-  - Idk
-  - Idk
-  - LOL idk
+Ultimately, this project explores game, play, and player-level data provided by NFL's Next Gen Stats.  Various neural network architectures and model types are experimented with and explored, and ultimately, deeper insights can help any lover of football to understand the various skills and strategies of players and coaches.
 
 ## Features
 
@@ -54,11 +40,11 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Df Image](/src/images/originalDfhead.png "Df Head")
 
-> The original dataset shown above is modified in two different ways to establish two models.  In the EDA section below, the dataset is modified using feature engineering and other methods to establish a baseline model based off different kaggle references.  This model is used as a reference for comparison to our group's own model, which is described in the Model section.  The alteration of the original dataset for our model is described in the below Data Modification section.  
+> The original dataset shown above is modified in two different ways to establish two models.  In the EDA section below, the dataset is modified using feature engineering and other methods to establish a baseline model based off different kaggle references.  This model is used as a reference for comparison to our group's own model, which is described in the Model section.  The alteration of the original dataset for our model is described in the below Data Modification section.
 
 ### EDA
 
-> In order to establish the baseline model, it is necessary to clean up the original dataset and add new features along the way.  
+> In order to establish the baseline model, it is necessary to clean up the original dataset and add new features along the way.
 >
 > At first, some features of the data are visualized such as the yards gained and lost for a random game.  The yard feature in particular is examined because ultimately, this feature is what will be predicted from our models.  The graph is shown below:
 >
@@ -86,7 +72,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Stadium Type](/src/images/stadiumType.png)
 >
-> As apparent from above, there are numerous variations and even misspellings of Indoor and Outdoor stadiums.  Let's clean it up and fix some of these typos.  
+> As apparent from above, there are numerous variations and even misspellings of Indoor and Outdoor stadiums.  Let's clean it up and fix some of these typos.
 >
 > ```python
 > def clean_StadiumType(txt):
@@ -118,7 +104,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >         return 1
 >     if 'indoor' in txt or 'closed' in txt:
 >         return 0
->     
+>
 >     return np.nan
 > train['StadiumType'] = train['StadiumType'].apply(transform_StadiumType)
 > ```
@@ -133,7 +119,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > ![Train Features](/src/images/trainFeatures.png)
 >
-> Ultimately, these are the features that provide an exploration of the dataset and gave us an understanding of what features to keep in mind for our model development.  
+> Ultimately, these are the features that provide an exploration of the dataset and gave us an understanding of what features to keep in mind for our model development.
 
 ### Data Modification
 
@@ -183,13 +169,13 @@ After model standarization and model selection, we have tested small 10x play da
 
 In order to deal with the large amount of data, we decided to deploy our model in the cloud in order to take avantage of higher powered v100 GPUs. We used the GPUs in the IBM Cloud, and ran Keras/Tensorflow with CUDA.  We ran our model inside the Docker container (w251 hw6 base docker), inside of a Jupyter notebook.
 
-We used a singular GPU. It took us 2.5 hours to finish the model training, with inference time being trivial. Our architecture is as follows: 
+We used a singular GPU. It took us 2.5 hours to finish the model training, with inference time being trivial. Our architecture is as follows:
 
 ![Cloud Architecture](/src/images/Cloud.png)
 
 ## Results
 
-The Kaggle competitionuses a Continuous Ranked Probability Score. There, competitors must predict a cimulative probability of yards achieved, strarting from -99 to +99 yards. 
+The Kaggle competitionuses a Continuous Ranked Probability Score. There, competitors must predict a cimulative probability of yards achieved, strarting from -99 to +99 yards.
 
 However, we choose not to restrict ourselves. We choose to take the yards gained by the rusher, and use that as a numeric value that we want to predict. In this case, the data is available in the dataset given by Kaggle.
 
