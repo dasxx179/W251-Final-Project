@@ -121,7 +121,7 @@ Ultimately, this project explores game, play, and player-level data provided by 
 >
 > Ultimately, these are the features that provide an exploration of the dataset and gave us an understanding of what features to keep in mind for our model development.
 
-### Data Modification
+### Data Modification - see https://github.com/dasxx179/W251-Final-Project/blob/master/src/tensorCreation.ipynb
 
 > To get this data into image format for our CNN, there were several data modifications that needed to be accomplished. First we needed to standardize the field such that the offense was always moving from left to right. To do this, we start by adjusting the players' X,Y, and direction values. We also need to adjust the line of scrimmage to reflect the changes to the field. To do this we not only change the X position of the line of scrimmage, but we also need to change the range of the line of scrimmage from 0 to 50 to 0 to 100 so that we don't need to specify own yard lines versus opponent's yard line.
 >
