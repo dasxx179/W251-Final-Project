@@ -210,7 +210,7 @@ Since we couldn't improve the model performance based on the second batch of the
 
 - How large was your dataset?
 
-> It was X gigs.
+> It was 36 gigs.
 
 - What inspired you to choose this project topic?
 
