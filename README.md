@@ -159,11 +159,17 @@ The original data has different dynamic range and prevent the network from conve
 
 After model standarization and model selection, we have tested small 10x play data sets in Google Colab and confirmed model converges as shown below. This small dataset was split into 6 training and 4 test sets for experiment.
 
-<img src="/src/images/toy_model_converge.png" width="800">
+#### Toy model performance
 
-## Experimentation
+Unlike the reasonable validation loss and no sign of overfitting based on the small data set, validation loss from the large training data set showed huge gap between training and validation loss. This means toy model is not sufficient enough to predict large dataset.
+<img src="/src/images/initial_hyper.png" width="800">
 
-### Hyperparameters
+
+#### Improved model with additional normalization
+In order to improve the performance, firstly, we have shifted our yardage to the positive direction to make all the yardage values positive. In addition, we also applied log to make the skewed data closer to the normal distribution (See picture below for reference). By doing this, all the intermediate layer output can be witihin activation function output range, which makes us fully utilize out network model. Secondly, we added more layers as well as L2 regularization at each layer to prevent overfitting, which frequently occurs to the high dimension neural network model.
+
+<img src="/src/images/updated_hyper.png" width="800">
+
 
 ## Cloud Deployment
 
@@ -185,6 +191,14 @@ We saw little to no overfitting, as we can see in our graph of predicted vs true
 
 ![Cloud Architecture](/src/images/results.png)
 
+One caveat here is that due to the memory overflow issue, we split entire data into two parts and ran training in two steps. In other words, we generated weights from the first batch of the data and created new session. In a new session, we loaded weight from the previous session and continued training with second batch of the data. However we have witnessed that continued training with second batch of the data didn't actually improve the training and validation loss as shown below.
+
+<img src="/src/images/2nd_batch_loss.png" width="800">
+
+
+Since we couldn't improve the model performance based on the second batch of the data, we just used first batch based model weight and applied that to the new validation data set in the second batch of the data. As you see below, the prediction result for the test data based on the second data set follows the similar trend as we saw in the first batch prediction result above.
+
+<img src="/src/images/2nd_batch_prediction.png" width="800">
 
 ## White Paper
 
