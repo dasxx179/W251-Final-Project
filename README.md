@@ -193,12 +193,12 @@ We saw little to no overfitting, as we can see in our graph of predicted vs true
 
 One caveat here is that due to the memory overflow issue, we split entire data into two parts and ran training in two steps. In other words, we generated weights from the first batch of the data and created new session. In a new session, we loaded weight from the previous session and continued training with second batch of the data. However we have witnessed that continued training with second batch of the data didn't actually improve the training and validation loss as shown below.
 
-<img src="/src/images/2nd_batch_loss.png" width="800">
+<img src="/src/images/2nd_batch_loss.png" width="500">
 
 
 Since we couldn't improve the model performance based on the second batch of the data, we just used first batch based model weight and applied that to the new validation data set in the second batch of the data. As you see below, the prediction result for the test data based on the second data set follows the similar trend as we saw in the first batch prediction result above.
 
-<img src="/src/images/2nd_batch_prediction.png" width="800">
+<img src="/src/images/2nd_batch_prediction.png" width="500">
 
 ## White Paper
 
