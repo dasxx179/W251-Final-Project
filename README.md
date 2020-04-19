@@ -1,3 +1,10 @@
+### Team
+
+* Sayan Das
+* Hyunchul (Peter) Kim
+* Hersh Solanki
+* Jake Tosh
+
 # Predicting NFL Rushing Yardage
 
 > Based off the NFL Big Data Bowl Kaggle [Challenge](https://www.kaggle.com/c/nfl-big-data-bowl-2020/overview)
@@ -216,12 +223,6 @@ Since we couldn't improve the model performance based on the second batch of the
 
 > In the evergrowing field of AI, ML and DL, algorithms are getting more and more complex.  Often, it is difficult to comprehend what the changes are in the field and what impact is ultimately made.  Especially for individuals that are less technology versed, it can be truly difficult to comprehend the meaningful effect of these fantastic technologies.  Thus, our group decided to choose a project topic that is meaningful and relatable to anyone: sports.  The NFL Big Data Bowl challenge gave us a headstart on the actual framework for our project, but ultimately, we just want to show that these remarkable emerging technologies are relatable to everyone, regardless of their background.
 
-### Team
-
-* Sayan Das
-* Hyunchul (Peter) Kim
-* Hersh Solanki
-* Jake Tosh
 
 ## References
 
